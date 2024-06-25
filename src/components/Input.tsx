@@ -3,6 +3,10 @@ import { View, Text, TextInput, StyleSheet } from "react-native";
 import { Controller } from "react-hook-form";
 import { COLORS, SIZES } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
+import {
+  getPasswordStrength,
+  getPasswordStrengthColor,
+} from "@/utils/passwordStrength";
 
 type InputProps = {
   control: any;
@@ -21,12 +25,16 @@ const Input = ({
 }: InputProps) => {
   const [inputValue, setInputValue] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [strength, setStrength] = useState(0);
 
   useEffect(() => {
     if (rules.validate) {
       setIsValid(rules.validate(inputValue) === true);
     }
-  }, [inputValue, rules]);
+    if (name === "password") {
+      setStrength(getPasswordStrength(inputValue));
+    }
+  }, [inputValue, rules, name]);
 
   const validateInput = (value: string) => {
     let valid = true;
@@ -73,13 +81,28 @@ const Input = ({
             />
             {inputValue.length > 0 && (
               <Ionicons
-                style={styles.icon}
                 name="checkmark-circle-outline"
                 size={24}
-                color={error ? "red" : isValid ? "green" : "red"}
+                color={
+                  error
+                    ? "red"
+                    : isValid && name !== "password"
+                    ? "green"
+                    : getPasswordStrengthColor(strength)
+                }
               />
             )}
           </View>
+          {/* {name === "password" && (
+            <View
+              style={[
+                styles.strengthIndicator,
+                { backgroundColor: getPasswordStrengthColor(strength) },
+              ]}
+            >
+              <Text style={styles.strengthText}>Strength: {strength}</Text>
+            </View>
+          )} */}
           {error && (
             <Text
               style={{
@@ -113,8 +136,17 @@ const styles = StyleSheet.create({
     flex: 1,
     color: COLORS.white,
   },
-  icon: {
-    marginLeft: 10,
+
+  strengthIndicator: {
+    borderRadius: 2,
+    marginTop: 5,
+    marginHorizontal: 15,
+  },
+  strengthText: {
+    color: COLORS.white,
+    fontSize: SIZES.h5,
+    textAlign: "center",
+    marginTop: 5,
   },
 });
 
