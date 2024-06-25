@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { Controller } from "react-hook-form";
 import { COLORS, SIZES } from "@/constants/theme";
@@ -19,7 +19,31 @@ const Input = ({
   placeholder,
   secureTextEntry,
 }: InputProps) => {
-  const [hasText, setHasText] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    if (rules.validate) {
+      setIsValid(rules.validate(inputValue) === true);
+    }
+  }, [inputValue, rules]);
+
+  const validateInput = (value: string) => {
+    let valid = true;
+    if (rules.required && !value) {
+      valid = false;
+    }
+    if (rules.pattern && !rules.pattern.value.test(value)) {
+      valid = false;
+    }
+    if (rules.minLength && value.length < rules.minLength.value) {
+      valid = false;
+    }
+    if (rules.validate && typeof rules.validate === "function") {
+      valid = rules.validate(value) === true;
+    }
+    return valid;
+  };
 
   return (
     <Controller
@@ -38,7 +62,8 @@ const Input = ({
               value={value}
               onChangeText={(text) => {
                 onChange(text);
-                setHasText(text.length > 0);
+                setInputValue(text);
+                setIsValid(validateInput(text));
               }}
               onBlur={onBlur}
               placeholder={placeholder}
@@ -46,12 +71,12 @@ const Input = ({
               placeholderTextColor={COLORS.white}
               secureTextEntry={secureTextEntry}
             />
-            {hasText && (
+            {inputValue.length > 0 && (
               <Ionicons
                 style={styles.icon}
                 name="checkmark-circle-outline"
                 size={24}
-                color={error ? "red" : "green"}
+                color={error ? "red" : isValid ? "green" : "red"}
               />
             )}
           </View>
