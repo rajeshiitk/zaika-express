@@ -38,7 +38,9 @@ export default function SignUpScreen() {
         }}
         resizeMode="cover"
       >
-        <ScrollView>
+        <ScrollView
+          style={{ maxWidth: 600, width: "100%", marginHorizontal: "auto" }}
+        >
           <View style={styles.topContainer}>
             <Text style={styles.title}>Zaika Express</Text>
             <Text style={styles.subtitle}>Sign up to continue</Text>
