@@ -11,8 +11,20 @@ import { COLORS, SIZES } from "@/constants/theme";
 import { StatusBar } from "expo-status-bar";
 import Button from "@/components/Button";
 import { Link } from "expo-router";
+import { useForm } from "react-hook-form";
+import Input from "@/components/Input";
+import React from "react";
 
-export default function TabTwoScreen({ navigation }: { navigation: any }) {
+export const EMAIL_REGEX =
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+export default function SignUpScreen() {
+  const { control, handleSubmit, watch } = useForm();
+  const pwd = watch("password");
+
+  const signUpWithEmail = (data: any) => {
+    console.log(data);
+  };
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -34,31 +46,44 @@ export default function TabTwoScreen({ navigation }: { navigation: any }) {
             <Text style={styles.subtitle}>Sign up to continue</Text>
           </View>
           <View style={styles.dataContainer}>
-            <TextInput
+            <Input
+              name="email"
+              control={control}
               placeholder="Email"
-              style={styles.textinput}
-              placeholderTextColor={COLORS.white}
+              rules={{
+                required: "Email is required",
+                pattern: { value: EMAIL_REGEX, message: "Email is invalid" },
+              }}
             />
-            <TextInput
+            <Input
+              name="password"
+              control={control}
               placeholder="Password"
-              style={styles.textinput}
               secureTextEntry
-              placeholderTextColor={COLORS.white}
+              rules={{
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password should be at least 8 characters long",
+                },
+              }}
             />
-            <TextInput
+            <Input
+              name="confirmPassword"
+              control={control}
               placeholder="Confirm Password"
-              style={styles.textinput}
               secureTextEntry
-              placeholderTextColor={COLORS.white}
+              rules={{
+                validate: (value: string) =>
+                  value === pwd || "Password do not match",
+              }}
             />
           </View>
           <View style={styles.btnContainer}>
-            <Button text="SIGN UP" />
+            <Button text="SIGN UP" onPress={handleSubmit(signUpWithEmail)} />
           </View>
           <View style={styles.bottomContainer}>
             <Link href="/(auth)/sign-in" style={{ textAlign: "center" }}>
-              {" "}
-              // here text inside link don't support asChild prop
               <Text style={styles.text}>
                 Already have an account? | Sign In
               </Text>
