@@ -40,7 +40,7 @@ export default function SignUpScreen() {
         >
           <View style={styles.topContainer}>
             <Text style={styles.title}>Zaika Express</Text>
-            <Text style={styles.subtitle}>Sign up to continue</Text>
+            <Text style={styles.subtitle}>Welcome Back ! </Text>
           </View>
           <View style={styles.dataContainer}>
             <Input

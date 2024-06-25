@@ -77,6 +77,7 @@ const Input = ({
               placeholder={placeholder}
               style={[
                 styles.input,
+                //@ts-expect-error
                 Platform.OS === "web" && { outlineWidth: 0 },
               ]}
               placeholderTextColor={COLORS.white}
