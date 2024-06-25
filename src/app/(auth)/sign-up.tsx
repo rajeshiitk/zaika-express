@@ -14,9 +14,7 @@ import { Link } from "expo-router";
 import { useForm } from "react-hook-form";
 import Input from "@/components/Input";
 import React from "react";
-
-export const EMAIL_REGEX =
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+import { EMAIL_REGEX } from "@/constants";
 
 export default function SignUpScreen() {
   const { control, handleSubmit, watch } = useForm();
