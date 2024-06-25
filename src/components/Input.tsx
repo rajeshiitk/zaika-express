@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet, Platform } from "react-native";
 import { Controller } from "react-hook-form";
 import { COLORS, SIZES } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
@@ -75,7 +75,10 @@ const Input = ({
               }}
               onBlur={onBlur}
               placeholder={placeholder}
-              style={styles.input}
+              style={[
+                styles.input,
+                Platform.OS === "web" && { outlineWidth: 0 },
+              ]}
               placeholderTextColor={COLORS.white}
               secureTextEntry={secureTextEntry}
             />
