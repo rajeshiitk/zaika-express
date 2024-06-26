@@ -3,7 +3,6 @@ import {
   ImageBackground,
   ScrollView,
   StyleSheet,
-  TextInput,
 } from "react-native";
 
 import { Text, View } from "@/components/Themed";
