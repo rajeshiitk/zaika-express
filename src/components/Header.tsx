@@ -36,7 +36,7 @@ const SearchBar = () => (
 
 const Header = () => {
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View>
       <StatusBar style="dark" />
       <View style={styles.container}>
         <TouchableOpacity onPress={() => {}}>
@@ -59,14 +59,11 @@ const Header = () => {
         </TouchableOpacity>
       </View>
       <SearchBar />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
   container: {
     height: 60,
     flexDirection: "row",
