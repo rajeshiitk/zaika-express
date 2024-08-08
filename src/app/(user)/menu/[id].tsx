@@ -5,11 +5,13 @@ import { PizzaSize } from "@/types";
 import { useState } from "react";
 import products, { DefaultImage } from "../../../../assets/data/products";
 import Button from "@/components/Button";
+import { useCart } from "@/providers/CartProvider";
 
 const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
 
 const ProductDetailsScreen = () => {
   const { id } = useLocalSearchParams();
+  const { addItem } = useCart();
 
   const router = useRouter();
 
@@ -21,6 +23,7 @@ const ProductDetailsScreen = () => {
     if (!product) {
       return;
     }
+    addItem(product, selectedSize);
     router.push("/cart");
   };
 
