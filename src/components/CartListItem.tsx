@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import React from "react";
-import Colors from "../constants/Colors";
 import { CartItem } from "../types";
 import { FontAwesome } from "@expo/vector-icons";
 import { useCart } from "../providers/CartProvider";
 import { DefaultImage } from "../../assets/data/products";
+import { COLORS } from "@/constants/theme";
 
 type CartListItemProps = {
   cartItem: CartItem;
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   price: {
-    color: Colors.light.tint,
+    color: COLORS.primary,
     fontWeight: "bold",
   },
 });
