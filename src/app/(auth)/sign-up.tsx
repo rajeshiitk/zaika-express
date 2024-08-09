@@ -1,4 +1,5 @@
 import {
+  Alert,
   Dimensions,
   ImageBackground,
   ScrollView,
@@ -14,13 +15,20 @@ import { useForm } from "react-hook-form";
 import Input from "@/components/Input";
 import React from "react";
 import { EMAIL_REGEX } from "@/constants";
+import { supabase } from "@/lib/supabase";
 
 export default function SignUpScreen() {
   const { control, handleSubmit, watch } = useForm();
+  const [loading, setLoading] = React.useState(false);
   const pwd = watch("password");
 
-  const signUpWithEmail = (data: any) => {
-    console.log(data);
+  const signUpWithEmail = async (data: any) => {
+    const { email, password } = data;
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({ email, password });
+
+    if (error) Alert.alert(error.message);
+    setLoading(false);
   };
   return (
     <View style={styles.container}>
@@ -79,7 +87,11 @@ export default function SignUpScreen() {
             />
           </View>
           <View style={styles.btnContainer}>
-            <Button text="SIGN UP" onPress={handleSubmit(signUpWithEmail)} />
+            <Button
+              disabled={loading}
+              text={loading ? "Creating account..." : "Create account"}
+              onPress={handleSubmit(signUpWithEmail)}
+            />
           </View>
           <View style={styles.bottomContainer}>
             <Link href="/(auth)/sign-in" style={{ textAlign: "center" }}>

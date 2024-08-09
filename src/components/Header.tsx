@@ -12,6 +12,7 @@ import { Link } from "expo-router";
 import { COLORS } from "@/constants/theme";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import { supabase } from "@/lib/supabase";
 
 const SearchBar = () => (
   <View style={styles.searchContainer}>
@@ -54,7 +55,10 @@ const Header = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.profileButton}>
+        <TouchableOpacity
+          onPress={async () => await supabase.auth.signOut()}
+          style={styles.profileButton}
+        >
           <Ionicons name="person-outline" size={24} color={COLORS.primary} />
         </TouchableOpacity>
       </View>
