@@ -1,31 +1,30 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
-import Colors from "../constants/Colors";
-import { OrderItem } from "../types";
+import { OrderItem, Tables } from "../types";
 import { DefaultImage } from "../../assets/data/products";
 import { COLORS } from "@/constants/theme";
 
 type OrderItemListItemProps = {
-  item: OrderItem;
+  item: (Tables<"order_items"> & { products: Tables<"products"> }) | null;
 };
 
 const OrderItemListItem = ({ item }: OrderItemListItemProps) => {
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: item.products.image || DefaultImage }}
+        source={{ uri: item?.products.image || DefaultImage }}
         style={styles.image}
         resizeMode="contain"
       />
       <View style={{ flex: 1 }}>
-        <Text style={styles.title}>{item.products.name}</Text>
+        <Text style={styles.title}>{item?.products.name}</Text>
         <View style={styles.subtitleContainer}>
-          <Text style={styles.price}>${item.products.price.toFixed(2)}</Text>
-          <Text>Size: {item.size}</Text>
+          <Text style={styles.price}>${item?.products.price.toFixed(2)}</Text>
+          <Text>Size: {item?.size}</Text>
         </View>
       </View>
       <View style={styles.quantitySelector}>
-        <Text style={styles.quantity}>{item.quantity}</Text>
+        <Text style={styles.quantity}>{item?.quantity}</Text>
       </View>
     </View>
   );
