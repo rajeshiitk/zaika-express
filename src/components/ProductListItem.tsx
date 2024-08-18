@@ -1,22 +1,23 @@
 import { Image, Text, Pressable, StyleSheet } from "react-native";
 import { Link, useSegments } from "expo-router";
-import { Product } from "@/types";
+import { Product, Tables } from "@/types";
 import { COLORS } from "@/constants/theme";
 import { DefaultImage } from "../../assets/data/products";
+import RemoteImage from "./RemoteImage";
 
 type ProductListItemProps = {
-  product: Product;
+  product: Tables<"products">;
 };
 
 const ProductListItem = ({ product }: ProductListItemProps) => {
   const segments = useSegments();
+
   return (
-    <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
+    <Link href={`/${segments[0]}/menu/${product.id} `} asChild>
       <Pressable style={styles.container}>
-        <Image
-          source={{
-            uri: product.image || DefaultImage,
-          }}
+        <RemoteImage
+          path={product.image}
+          fallback={DefaultImage}
           style={styles.image}
           resizeMode="contain"
         />
