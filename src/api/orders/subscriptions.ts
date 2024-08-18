@@ -39,7 +39,7 @@ export const useUpdateOrderSubscription = (id: number) => {
           filter: `id=eq.${id}`,
         },
         (payload) => {
-          queryClient.invalidateQueries(["orders", id]);
+          queryClient.invalidateQueries({ queryKey: ["orders", id] });
         }
       )
       .subscribe();
