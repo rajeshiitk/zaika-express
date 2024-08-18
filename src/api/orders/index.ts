@@ -109,7 +109,7 @@ export const useUpdateOrder = () => {
       return updatedOrder;
     },
     async onSuccess(_, { id }) {
-      await queryClient.invalidateQueries(["orders"]);
+      await queryClient.invalidateQueries(["order"]);
       await queryClient.invalidateQueries(["orders", id]);
     },
   });

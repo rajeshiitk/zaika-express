@@ -9,7 +9,6 @@ import {
   Pressable,
   ActivityIndicator,
 } from "react-native";
-import orders from "../../../../assets/data/orders";
 import { COLORS } from "@/constants/theme";
 import { useOrderDetails, useUpdateOrder } from "@/api/orders";
 
@@ -46,7 +45,7 @@ export default function OrderDetailsScreen() {
               {OrderStatusList.map((status) => (
                 <Pressable
                   key={status}
-                  onPress={() => console.warn("Update status")}
+                  onPress={() => updateStatus(status)}
                   style={{
                     borderColor: COLORS.primary,
                     borderWidth: 1,
