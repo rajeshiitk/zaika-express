@@ -17,7 +17,7 @@ const OrderListItem = ({ order }: OrderListItemProps) => {
   const basePath = segments[0]?.replace(/^\//, ""); // Remove leading slash if it exists
 
   return (
-    <Link href={`/${basePath}/orders/${order.id}`} asChild>
+    <Link href={`/orders/${order.id}`} asChild>
       <Pressable style={styles.container}>
         <View>
           <Text style={styles.title}>Order #{order.id}</Text>
