@@ -10,7 +10,6 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { COLORS } from "@/constants/theme";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { supabase } from "@/lib/supabase";
 
