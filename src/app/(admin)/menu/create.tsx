@@ -92,12 +92,15 @@ const CreateProductScreen = () => {
     );
   };
 
-  const onUpdate = () => {
+  const onUpdate = async () => {
     if (!validateInput()) {
       return;
     }
+
+    const imagePath = await uploadImage();
+
     updateProduct(
-      { id, name, price: parseFloat(price), image },
+      { id, name, price: parseFloat(price), image: imagePath },
       {
         onSuccess: () => {
           resetFields();
@@ -150,7 +153,7 @@ const CreateProductScreen = () => {
     const base64 = await FileSystem.readAsStringAsync(image, {
       encoding: "base64",
     });
-    const filePath = `${randomUUID()}.png`;
+    const filePath = `${randomUUID()}.jpeg`;
     const contentType = "image/png";
     const { data, error } = await supabase.storage
       .from("product-images")
